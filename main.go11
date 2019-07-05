@@ -1,0 +1,36 @@
+package main
+
+import (
+	"fmt"
+	"gitlab.saobang.vn/vimo-aritime/go-billing-core/errors"
+)
+
+var ErrCoreService = map[string] error {
+	"00":   errors.New("00","Your processing is succeed"), // successfuly
+	"01":   errors.New("01","FAILED"), //can refund
+	"03":   errors.New("03","Khoon in server vao db"), //can refund
+
+} 
+
+func main(){
+
+
+	e := testE()
+	fmt.Println(e.Error())
+
+
+	if err,ok :=e.(errors.BaseError); ok {
+		fmt.Println(err.Code())
+	}	
+
+
+	// e := errors.New("00","Your processing is succeed") //ErrCoreService["00"]	
+	// fmt.Println(e.Error())
+	// //if err,ok :=e.(errors.BaseError); ok {
+	// 	fmt.Println(e.Code())
+	// //}	
+}
+
+func testE() error {	
+	return ErrCoreService["03"]
+}
